@@ -1,0 +1,159 @@
+<html>
+<head>
+
+  <link rel="stylesheet" type="text/css" href="style/base.css">
+
+  <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+
+  <script src="js/qr.js"></script>
+  <script src="js/words.js"></script>
+  <script>
+    var usd_conv = 128.88;
+    var wallet ='18cQQknxu1XJXVCbCnuyZq9Ws48mfYLmzd';
+
+    window.onload = function() {
+      setupqr();
+      doqr();
+    }; 
+
+    $("document").ready(function() {
+
+      setfee(0);
+
+      $('#phrase').bind('change keyup', function () {
+          calculate();
+      });
+
+      $('#phrase').click(function(){
+          wordsArriving();
+          //$(this).val('');
+          //$(this).css('color','#260b01');
+          //$(this).css('font-weight','bold');
+      });
+
+      $('#pay').click(function(){
+        _gaq.push(['_trackEvent', 'swear', $('#phrase').val() ]); 
+      });
+
+      $('#phrase').focus();
+
+      $('#phrase').keydown(function() {
+	if ($(this).val() == 'Talk Dirty to Me') {
+	  wordsArriving();
+        }
+      });
+
+    });
+
+    function wordsArriving() {
+      $('#phrase').val('').css('color','#260b01').css('font-weight','bold');
+    };
+
+    function c(string, word) {
+       word = word.toLowerCase();
+       var substrings = string.split(word);
+       return substrings.length - 1;
+    }
+
+    function setfee(fee) {
+      var html;
+      var fee_adjust = fee || 0.0025;
+      var usd = fee_adjust * usd_conv;
+
+      // rounding... double check this
+      fee_adjust = Math.round(fee_adjust * 1000) / 1000;
+      usd = Math.round(usd * 100) /100;
+       
+      var disp = 'bc' + fee_adjust + '<br>$' + usd;
+
+      if (fee == 0) { //default fee processing
+        disp += '<div id="default">(Default Fee)</div> ';
+      }
+
+      $('#fee').html( disp);
+
+      html = 'bitcoin:' + wallet + '?amount=' + fee_adjust;
+
+      $('#pay').attr('href', html);
+      doqr(html);
+
+    }
+
+  </script>
+
+<div id="header">
+  <div id="title">
+     Bitcoin Swear Jar
+  </div>
+</div>
+
+
+<div id="middlebar">
+  <div id="middlebartext">
+    You Say, You Pay
+  </div>
+</div>
+
+<div id="main">
+<div id="content">
+
+  <textarea type="text" id="phrase" size="50" lines="2">Talk Dirty to Me</textarea>
+
+  <a id="pay">
+    <span id="fee"></span>
+  </a>
+
+  <span id="qrdiv">
+
+    <canvas id="qrcanv"></canvas>
+  </span>
+
+<h2 id="directions">
+  Click the amount or scan the QR to pay with Bitcoin
+</h2>
+
+<br>
+
+Wallet address: 18cQQknxu1XJXVCbCnuyZq9Ws48mfYLmzd
+
+<br><br>
+
+<div>
+All proceeds will be used for charity - like the <a href="http://westutter.org">National Stuttering Association</a> or <a href="http://www.self-help.org.uk/directory/speech-disorders/"> another speech disorder charity</a>.<br>
+Proof of charity will be auditable via correlation between <a href="https://blockchain.info/address/18cQQknxu1XJXVCbCnuyZq9Ws48mfYLmzd">block chain of this address</a> and published receipt from chairty. I plan to group the donations per bitcoin, i.e. once we get a full bitcoin I will make a donation. Got a better idea? <a href="http://www.reddit.com/r/Bitcoin/comments/1fgvs1/bitcoin_swear_jar_beta_feedback_please/caa4osw">Let me know!</a>
+</div>
+
+<!-- Sorry... I'm using BR here... I'll make a style sheet soon I swear (pun intended) -->
+
+<br>
+
+</div>
+
+<div id="middlebar">
+
+<div id="middlebartext">
+  <div id="footer">
+  This is v0.5 of the site<br>
+  Soliciting and responding to feedback from <a href="http://reddit.com/r/bitcoin">/r/bitcoin</a> <br>
+  <a href="http://www.reddit.com/r/Bitcoin/comments/1e5ar6/just_built_this_bitcoinswearjar_looking_for/">Alpha announcement</a> : 2013/05/11 <br>
+  <a href="http://redd.it/1fgvs1">Beta announcement</a> : 2013/06/01
+  </div>
+</div>
+
+</div>
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-6617028-4']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+</html>

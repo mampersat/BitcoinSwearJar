@@ -1,0 +1,169 @@
+<html>
+<head>
+
+  <link rel="stylesheet" type="text/css" href="style/base.css">
+
+  <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+
+  <script>
+    var usd_conv = 122.75;
+    var wallet ='18cQQknxu1XJXVCbCnuyZq9Ws48mfYLmzd';
+
+
+    $("document").ready(function() {
+
+      setfee(0);
+
+      $('#phrase').bind('change keyup', function () {
+          calculate();
+      });
+
+      $('#phrase').click(function(){
+          $(this).val('');
+          $(this).css('color','#260b01');
+          $(this).css('font-weight','bold');
+      });
+    });
+
+    function c(string, word) {
+       word = word.toLowerCase();
+       var substrings = string.split(word);
+       return substrings.length - 1;
+    }
+
+    function setfee(fee) {
+      var html;
+      var fee_adjust = fee || 0.0025;
+      var usd = fee_adjust * usd_conv;
+
+      // rounding... double check this
+      fee_adjust = Math.round(fee_adjust * 1000) / 1000;
+      usd = Math.round(usd * 100) /100;
+       
+      var disp = 'bc' + fee_adjust + '<br>$' + usd;
+
+      if (fee == 0) { //default fee processing
+        disp += '<div id="default">(Default Fee)</div> ';
+      }
+
+      $('#fee').html( disp);
+
+      html = 'bitcoin:' + wallet + '?amount=' + fee_adjust;
+
+      $('#pay').attr('href', html);
+
+    }
+
+    function calculate() {
+ 
+      var p = $('#phrase').val();
+      var fee = 0;
+      p = p.toLowerCase();
+
+// BEGIN cut/paste from worksheet
+fee +=c(p, 'Cunt') * 0.02;
+fee +=c(p, 'Motherfucker*') * 0.01;
+fee +=c(p, 'Fuck') * 0.01;
+fee +=c(p, 'Wanker') * 0.01;
+fee +=c(p, 'Nigger') * 0.01;
+fee +=c(p, 'Bastard') * 0.01;
+fee +=c(p, 'Prick') * 0.01;
+fee +=c(p, 'Bollocks') * 0.01;
+fee +=c(p, 'Arsehole') * 0.002;
+fee +=c(p, 'Asshole') * 0.002;
+fee +=c(p, 'Paki') * 0.002;
+fee +=c(p, 'Shag') * 0.002;
+fee +=c(p, 'Whore') * 0.002;
+fee +=c(p, 'Twat') * 0.002;
+fee +=c(p, 'Piss off') * 0.002;
+fee +=c(p, 'Spastic') * 0.002;
+fee +=c(p, 'Slag') * 0.002;
+fee +=c(p, 'Shit') * 0.002;
+fee +=c(p, 'Dickhead') * 0.001;
+fee +=c(p, 'Pissed off') * 0.001;
+fee +=c(p, 'Arse') * 0.001;
+fee +=c(p, 'Ass') * 0.001;
+fee +=c(p, 'Bugger') * 0.001;
+fee +=c(p, 'Balls') * 0.001;
+fee +=c(p, 'Jew') * 0.001;
+fee +=c(p, 'Sodding*') * 0.001;
+fee +=c(p, 'Jesus Christ') * 0.001;
+fee +=c(p, 'Crap') * 0.001;
+fee +=c(p, 'Bloody') * 0.001;
+fee +=c(p, 'God') * 0.001;
+// END cut/pate from worksheet
+
+      setfee(fee);
+      
+    }
+
+  </script>
+
+<div id="header">
+  <div id="title">
+     Bitcoin Swear Jar
+  </div>
+</div>
+
+
+<div id="middlebar">
+  <div id="middlebartext">
+    You Say, You Pay
+  </div>
+</div>
+
+<div id="main">
+<div id="content">
+
+  <textarea type="text" id="phrase" size="50" lines="2">Talk Dirty to Me</textarea>
+
+  <a id="pay">
+    <span id="fee"></span>
+  </a>
+
+  <span id="qr">
+    <img src="request.001.gif">
+  </span>
+
+<h2>
+  Scan image with phone with bitcoin wallet installed to send 1 mbit (about a dime)
+</h2>
+
+<br>
+
+Wallet address: 18cQQknxu1XJXVCbCnuyZq9Ws48mfYLmzd
+
+<br><br>
+
+<div>
+
+  The money will be used to keep this server running and the rest to some charity - like <a href="westutter.org">National Stuttering Association</a>
+</div>
+
+<!-- Sorry... I'm using BR here... I'll make a style sheet soon I swear (pun intended) -->
+
+<br>
+
+</div>
+
+<div id="middlebar">
+
+<div id="middlebartext">
+  This is v0.4 of the site<br>
+  Soliciting and responding to feedback and trying to see what my users want<br>
+   Read the good and the bad in comments on this <a href="http://www.reddit.com/r/Bitcoin/comments/1e5ar6/just_built_this_bitcoinswearjar_looking_for/">Reddit Launch Announcment</a>
+</div>
+</div>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-6617028-4', 'bitcoinswearjar.com');
+  ga('send', 'pageview');
+
+</script>
+
+</html>
