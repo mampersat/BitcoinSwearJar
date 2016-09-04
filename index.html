@@ -19,11 +19,12 @@
   <script>
     var usd_conv = 615.85;
     var fee_quarter = 0.25 / usd_conv;
-    var wallet ='18cQQknxu1XJXVCbCnuyZq9Ws48mfYLmzd';
+    fee_quarter = Math.round(fee_quarter * 1000000) / 1000000;
+    var wallet ='1F9XtK3RumBejAsRBcaBc1Nt5aHwuSVqm6';
 
     window.onload = function() {
       setupqr();
-      doqr();
+      doqr('bitcoin:' + wallet + '?amount=' + fee_quarter);
     };
 
     $("document").ready(function() {
@@ -65,24 +66,22 @@
        return substrings.length - 1;
     }
 
-    function setfee(fee) {
+    function setfee(usd) {
       var html;
-      var fee_adjust = fee || fee_quarter;
-      var usd = fee_adjust * usd_conv;
+      usd = usd || 0.25;
+      var btc = usd / usd_conv;
+      var mbtc = btc * 1000;
 
-      // rounding... double check this
-      fee_adjust = Math.round(fee_adjust * 1000000) / 1000000;
-      usd = Math.round(usd * 100) /100;
 
-      var disp = fee_adjust*1000  + ' mbc<br>$' + usd;
+      var disp = mbtc.toFixed(2)  + ' mbtc<br>$' + usd.toFixed(2);
 
-      if (fee == 0) { //default fee processing
+      if (usd == 0.25) { //default fee processing
         disp += '<div id="default">(Default Fee)</div> ';
       }
 
       $('#fee').html( disp);
 
-      html = 'bitcoin:' + wallet + '?amount=' + fee_adjust;
+      html = 'bitcoin:' + wallet + '?amount=' + btc.toFixed(8);
 
       $('#pay').attr('href', html);
       doqr(html);
@@ -101,7 +100,7 @@
 
 <div id="middlebar">
   <div id="middlebartext">
-    Pay for what you Say
+    Pay for What You Say
   </div>
 </div>
 
@@ -125,13 +124,14 @@
 
 <br>
 
-Wallet address: 18cQQknxu1XJXVCbCnuyZq9Ws48mfYLmzd
+Wallet address: <script>document.write(wallet);</script>
 
 <br><br>
 
 <div>
 All proceeds will be used for charity - like the <a href="http://westutter.org">National Stuttering Association</a> or <a href="http://www.self-help.org.uk/directory/speech-disorders/"> another speech disorder charity</a>.<br>
-Proof of charity will be auditable via correlation between <a href="https://blockchain.info/address/18cQQknxu1XJXVCbCnuyZq9Ws48mfYLmzd">block chain of this address</a> and published receipt from chairty. I plan to group the donations per bitcoin, i.e. once we get a full bitcoin I will make a donation. Got a better idea? <a href="http://www.reddit.com/r/Bitcoin/comments/1fgvs1/bitcoin_swear_jar_beta_feedback_please/caa4osw">Let me know!</a>
+Proof of charity will be auditable via correlation between <a href="https://blockchain.info/address/1F9XtK3RumBejAsRBcaBc1Nt5aHwuSVqm6">block chain of this address</a> and published receipt from chairty.
+I plan to group the donations per bitcoin, i.e. once we get a full bitcoin I will make a donation. Got a better idea? <a href="mailto:msheppard@gmail.com?subject=Bitcoin Swearjar">Feedback</a>
 </div>
 
 <!-- Sorry... I'm using BR here... I'll make a style sheet soon I swear (pun intended) -->
@@ -144,10 +144,11 @@ Proof of charity will be auditable via correlation between <a href="https://bloc
 
 <div id="middlebartext">
   <div id="footer">
-  This is v0.5 of the site<br>
+  This is v1.0 of the site<br>
   Soliciting and responding to feedback from <a href="http://reddit.com/r/bitcoin">/r/bitcoin</a> <br>
   <a href="http://www.reddit.com/r/Bitcoin/comments/1e5ar6/just_built_this_bitcoinswearjar_looking_for/">Alpha announcement</a> : 2013/05/11 <br>
   <a href="http://redd.it/1fgvs1">Beta announcement</a> : 2013/06/01
+  <a href=""
   </div>
 </div>
 

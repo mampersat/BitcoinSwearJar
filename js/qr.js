@@ -108,7 +108,7 @@ gexp = [
 
 // Working buffers:
 // data input and ecc append, image working buffer, fixed part of image, run lengths for badness
-var strinbuf=[], eccbuf=[], qrframe=[], framask=[], rlens=[]; 
+var strinbuf=[], eccbuf=[], qrframe=[], framask=[], rlens=[];
 // Control values - width is based on version, last 4 are from table.
 var version, width, neccblk1, neccblk2, datablkw, eccblkwid;
 var ecclevel = 1;
@@ -296,7 +296,7 @@ function  applymask(m)
 // Badness coefficients.
 var N1 = 3, N2 = 3, N3 = 40, N4 = 10;
 
-// Using the table of the length of each run, calculate the amount of bad image 
+// Using the table of the length of each run, calculate the amount of bad image
 // - long runs or those that look like finders; called twice, once each for X and Y
 function badruns(length)
 {
@@ -742,7 +742,7 @@ function setupqr(){
 }
 
 function doqr(s) {
-    if (!s) s="bitcoin:18cQQknxu1XJXVCbCnuyZq9Ws48mfYLmzd?amount=0.003";
+    if (!s) s="bitcoin:1F9XtK3RumBejAsRBcaBc1Nt5aHwuSVqm6?amount=0.003";
     ecclevel = '1'; //d.qrinp.ECC.value;
     qf = genframe( s);
 
@@ -754,7 +754,7 @@ function doqr(s) {
     elem.width = 350;
     elem.height = 350;
     var i,j;
-    
+
     px = wd / (width);
     px = Math.round(px - 0.5);
 
