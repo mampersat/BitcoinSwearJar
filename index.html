@@ -8,17 +8,23 @@
   <link rel="stylesheet" type="text/css" href="style/base.css">
 
   <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+  <script
+    src="http://code.jquery.com/jquery-3.1.0.js"
+    integrity="sha256-slogkvB1K3VOkzAI8QITxV3VzpOnkeNVsKvtkYLMjfk="
+    crossorigin="anonymous">
+  </script>
 
   <script src="js/qr.js"></script>
   <script src="js/words.js"></script>
   <script>
-    var usd_conv = 128.88;
+    var usd_conv = 615.85;
+    var fee_quarter = 0.25 / usd_conv;
     var wallet ='18cQQknxu1XJXVCbCnuyZq9Ws48mfYLmzd';
 
     window.onload = function() {
       setupqr();
       doqr();
-    }; 
+    };
 
     $("document").ready(function() {
 
@@ -36,7 +42,7 @@
       });
 
       $('#pay').click(function(){
-        _gaq.push(['_trackEvent', 'swear', $('#phrase').val() ]); 
+        _gaq.push(['_trackEvent', 'swear', $('#phrase').val() ]);
       });
 
       $('#phrase').focus();
@@ -61,14 +67,14 @@
 
     function setfee(fee) {
       var html;
-      var fee_adjust = fee || 0.0025;
+      var fee_adjust = fee || fee_quarter;
       var usd = fee_adjust * usd_conv;
 
       // rounding... double check this
-      fee_adjust = Math.round(fee_adjust * 1000) / 1000;
+      fee_adjust = Math.round(fee_adjust * 1000000) / 1000000;
       usd = Math.round(usd * 100) /100;
-       
-      var disp = 'bc' + fee_adjust + '<br>$' + usd;
+
+      var disp = fee_adjust*1000  + ' mbc<br>$' + usd;
 
       if (fee == 0) { //default fee processing
         disp += '<div id="default">(Default Fee)</div> ';
@@ -95,7 +101,7 @@
 
 <div id="middlebar">
   <div id="middlebartext">
-    You Say, You Pay
+    Pay for what you Say
   </div>
 </div>
 
